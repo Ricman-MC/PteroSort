@@ -1,0 +1,2 @@
+# PteroSort
+Pterodactyl server sorter
