@@ -1,7 +1,7 @@
 # PteroSort
 Pterodactyl server sorter
 
-Script on [GreasyFork](https://greasyfork.org/cs/scripts/528298-pterosort)
+Script on [GreasyFork](https://greasyfork.org/cs/scripts/528298-pterosort) or you can download from releases on github and install it manually
 
 [Tapermonkey](https://www.tampermonkey.net/) Required!!!
 
