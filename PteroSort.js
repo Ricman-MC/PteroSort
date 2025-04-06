@@ -12,11 +12,15 @@
 // ==/UserScript==
 
 // IMPORTANT
-// Set your own domain for the pterodactyl panel in your  @match example is provided you can add as many as you need
-// Script supports only vanilla pterodactyl panel v.1.11.10 (its possible it will work on diferent versions not tested)
+// To make this script work on your Pterodactyl panel, you need to add the panel's full URL manually.
+// Go to Tampermonkey dashboard → click the script name → Settings tab → look for Includes/Excludes → User matches → click Add...
+// Then add the full HTTPS URL of your panel there (e.g., https://panel.your-server.eu/)
+// You can add multiple panel URLs if needed.
+// Script supports vanilla pterodactyl panel v.1.11.10 (its possible it will work on diferent versions not tested)
 // IMPORTANT
 
-// this script has some hardcoded parts i expect it will break when update comes
+// this script has some hardcoded parts it could break when update of pterodactyl panel comes
+
 
 
 (function () {
