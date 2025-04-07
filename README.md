@@ -10,7 +10,7 @@ Tutorial on how to install and small showcase:
 
 <video src="https://github.com/user-attachments/assets/7c6b0b60-a2ae-400b-b7ba-6a2e9a49faaf"></video>
 
-##Tutorial in words:
+Tutorial in words:
 Install [Tapermonkey](https://www.tampermonkey.net/)
 Enable Developer mode in extensions of your browser. (Tapermonkey needs this in order to work!)
 Go to [GreasyFork](https://greasyfork.org/cs/scripts/528298-pterosort-category) and install this script.
