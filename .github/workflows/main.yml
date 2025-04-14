@@ -1,13 +1,22 @@
-name: Create Archive
-on: [push]
+name: Zip and Attach to Release
+on:
+  release:
+    types: [created]
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@0.7.6
-      with:
-        type: 'zip'
-        filename: 'pterosort.blueprint'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create ZIP archive
+        run: |
+          zip -r pterosort.blueprint . -x "*.git*" "*node_modules*" ".editorconfig"
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: pterosort.blueprint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
