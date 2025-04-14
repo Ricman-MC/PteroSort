@@ -1,6 +1,22 @@
 # PteroSort
 Pterodactyl server sorter made for vannila/unmodified pterodactyl panel!
 
+PteroSort can be installed as **browser add-on via Tapermonkey** or as **[blueprint](https://blueprint.zip/) extension**.
+
+## PteroSort as blueprint extension
+
+First, make sure you have [blueprint installed](https://blueprint.zip/docs/?page=getting-started/Installation) on your pterodactyl server.
+
+Download the latest `pterosort.blueprint` file from the [release section](https://github.com/Ricman-MC/PteroSort/releases/latest) and place it inside your pterodactyl panel directory `/var/www/pterodactyl/`.
+
+Then just run the command `blueprint -install pterosort` to install PteroSort to your panel.
+
+To uninstall it, run `blueprint -r pterosort`.
+
+## PteroSort as browser add-on  via Tapermonkey
+
+Use this version if you don't have admin access to the server or just want to use it on your browser as Add-on.
+
 Script on [GreasyFork](https://greasyfork.org/cs/scripts/528298-pterosort-category) or you can download from releases on github and install it manually
 
 [Tapermonkey](https://www.tampermonkey.net/) Required!!!
