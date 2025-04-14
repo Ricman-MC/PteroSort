@@ -1,0 +1,28 @@
+name: Zip and Attach to Release
+on:
+  release:
+    types: [created]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create ZIP archive
+        run: |
+          zip -r pterosort.blueprint . -x "*.git*" "*node_modules*" ".editorconfig"
+
+      - name: Extract JS from wrapper.blade.php
+        run: |
+          sed -n '/<script>/,/<\/script>/p' ./dashboard/wrapper.blade.php | \
+          sed '1d;$d' > pterosort.js
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            pterosort.blueprint
+            pterosort.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
