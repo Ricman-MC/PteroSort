@@ -4,9 +4,12 @@ Pterodactyl server sorter made for vannila/unmodified pterodactyl panel!
 Script on [GreasyFork](https://greasyfork.org/cs/scripts/528298-pterosort-category) or you can download from releases on github and install it manually
 
 [Tapermonkey](https://www.tampermonkey.net/) Required!!!
+ㅤ
+### Preview
+<img width="1338" height="582" alt="PteroSort-Main" src="https://github.com/user-attachments/assets/64dec3db-f255-412d-a51f-50f35597c8f2" />
+ㅤ
 
-
-Tutorial on how to install and small showcase:
+Tutorial on how to install and small showcase (old look):
 
 <video src="https://github.com/user-attachments/assets/7c6b0b60-a2ae-400b-b7ba-6a2e9a49faaf"></video>
 
