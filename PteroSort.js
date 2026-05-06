@@ -1,20 +1,20 @@
 // ==UserScript==
 // @name         PteroSort Category
 // @namespace    http://tampermonkey.net/
-// @version      1.3.0
+// @version      1.3.1
 // @description  Pterodactyl server sorter with categories
 // @homepage     https://github.com/Ricman-MC/PteroSort
 // @author       Ricman
 // @license      Apache 2.0
-// @match        https://panel.your-server.eu/
-// @match        https://panel.your-second-server.com/
+// @match        https://panel.your-server.eu/*
+// @match        https://panel.your-second-server.com/*
 // @grant        none
 // ==/UserScript==
 
 // IMPORTANT
 // To make this script work on your Pterodactyl panel, you need to add the panel's full URL manually.
 // Go to Tampermonkey dashboard → click the script name → Settings tab → look for Includes/Excludes → User matches → click Add...
-// Then add the full HTTPS URL of your panel there (e.g., https://panel.your-server.eu/)
+// Then add the full HTTPS URL of your panel there (e.g., https://panel.your-server.eu/*)
 // You can add multiple panel URLs if needed.
 // This version supports vanilla pterodactyl panel v1.12.2
 // You need to have at least one server in Pterodactyl in order for the script to load.
@@ -45,6 +45,10 @@
 
     let dragLockEnabled = localStorage.getItem('dragLockEnabled') === 'true';
     let categories = [];
+
+    function isDashboardPage() {
+        return window.location.pathname === '/' || window.location.pathname === '';
+    }
 
     let _serverWaitObserver = null;
     let _serverWaitTimeout = null;
@@ -1277,17 +1281,35 @@
         const originalPushState = history.pushState.bind(history);
         history.pushState = function(state, title, url) {
             originalPushState(state, title, url);
-            requestReinit('pushState');
+            if (isDashboardPage()) {
+                if (_serverWaitObserver) { _serverWaitObserver.disconnect(); _serverWaitObserver = null; }
+                if (_serverWaitTimeout) { clearTimeout(_serverWaitTimeout); _serverWaitTimeout = null; }
+                waitForServerRowsAndInit('pushState');
+            } else {
+                console.log("PteroSort: pushState detected but not on dashboard, skipping re-init.");
+            }
         };
 
         const originalReplaceState = history.replaceState.bind(history);
         history.replaceState = function(state, title, url) {
             originalReplaceState(state, title, url);
-            requestReinit('replaceState');
+            if (isDashboardPage()) {
+                if (_serverWaitObserver) { _serverWaitObserver.disconnect(); _serverWaitObserver = null; }
+                if (_serverWaitTimeout) { clearTimeout(_serverWaitTimeout); _serverWaitTimeout = null; }
+                waitForServerRowsAndInit('replaceState');
+            } else {
+                console.log("PteroSort: replaceState detected but not on dashboard, skipping re-init.");
+            }
         };
 
         window.addEventListener('popstate', () => {
-            requestReinit('popstate');
+            if (isDashboardPage()) {
+                if (_serverWaitObserver) { _serverWaitObserver.disconnect(); _serverWaitObserver = null; }
+                if (_serverWaitTimeout) { clearTimeout(_serverWaitTimeout); _serverWaitTimeout = null; }
+                waitForServerRowsAndInit('popstate');
+            } else {
+                console.log("PteroSort: popstate detected but not on dashboard, skipping re-init.");
+            }
         });
 
         attachToggleListener();
@@ -1306,11 +1328,16 @@
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    waitForElement(serverSelector, () => {
-        console.log("PteroSort: Initializing...");
-        init();
+    if (isDashboardPage()) {
+        waitForElement(serverSelector, () => {
+            console.log("PteroSort: Initializing...");
+            init();
+            observePageChanges();
+        });
+    } else {
+        console.log("PteroSort: Not on dashboard page (current path: " + window.location.pathname + "), skipping init but keeping observers active.");
         observePageChanges();
-    });
+    }
 
     const style = document.createElement('style');
     style.textContent = `
